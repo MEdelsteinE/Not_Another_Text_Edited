@@ -13,6 +13,24 @@ module.exports = () => {
       main: './src/js/index.js',
       install: './src/js/install.js'
     },
+    plugins: [  
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        inject: true,
+        chunks: ['main'],
+        filename: 'index.html',
+      }),
+      new HtmlWebpackPlugin({
+        template: './src/install.html',
+        inject: true,
+        chunks: ['install'],
+        filename: 'install.html',
+      }),
+      new InjectManifest({  
+        swSrc: './src-sw.js',
+        swDest: 'sw.js',
+      }),
+    ],
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
@@ -23,8 +41,21 @@ module.exports = () => {
 
     module: {
       rules: [
-        
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        }
       ],
-    },
-  };
+},
+};
 };
