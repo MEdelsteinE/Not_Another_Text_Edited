@@ -21,7 +21,7 @@ if (is_prod) {
     new WebpackPwaManifest({
       name: 'jate editor',
       short_name: 'jate_ed',
-      description: 'this is a progressive web app that can run in the browser both online and offline',
+      description: 'This is a progressive web app that can run in the browser both online and offline',
       background_color: '#fff',
       theme_color: '#2F4ced',
       publicPath:'/',
