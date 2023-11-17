@@ -6,48 +6,61 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 // TODO: Add and configure workbox plugins for a service worker and manifest file.
 // TODO: Add CSS loaders and babel to webpack.
 
+const is_prod = process.env.NODE_ENV === 'production'
+console.log(process.env.NODE_ENV)
+
+const plugins = [
+  new HtmlWebpackPlugin({
+    template: './index.html',
+    title: 'text'
+  }),
+]
+if (is_prod) {
+
+  plugins.push(...[
+    new WebpackPwaManifest({
+      name: 'jate editor',
+      short_name: 'jate_ed',
+      description: 'this is a progressive web app that can run in the browser both online and offline',
+      background_color: '#fff',
+      theme_color: '#2F4ced',
+      publicPath:'/',
+      inject:true,
+      icons: [
+        {
+          src: path.resolve('src/images/logo.png'),
+          sizes: [96, 128, 192, 256.384, 512]
+        }
+      ],
+    }),
+    new InjectManifest({
+      swSrc: './src-sw.js',
+      swDest: 'src-sw.js'
+    })
+  ])
+}
 module.exports = () => {
   return {
-    mode: 'development',
+    mode: is_prod ? 'production' : 'development',
     entry: {
       main: './src/js/index.js',
       install: './src/js/install.js'
     },
-    plugins: [  
-      new HtmlWebpackPlugin({
-        template: './src/index.html',
-        inject: true,
-        chunks: ['main'],
-        filename: 'index.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: './src/install.html',
-        inject: true,
-        chunks: ['install'],
-        filename: 'install.html',
-      }),
-      new InjectManifest({  
-        swSrc: './src-sw.js',
-        swDest: 'sw.js',
-      }),
-    ],
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
-    plugins: [
-      
-    ],
+    plugins,
 
     module: {
       rules: [
         {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader']
         },
         {
-          test: /\.m?js$/,
-          exclude: /(node_modules|bower_components)/,
+          test: /\.js$/,
+          exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
@@ -56,6 +69,6 @@ module.exports = () => {
           }
         }
       ],
-},
-};
+    },
+  };
 };
