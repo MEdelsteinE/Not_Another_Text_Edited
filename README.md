@@ -46,11 +46,11 @@ Currently there is no testing for this application
 
 MEdelsteinE@github.com
 
-![Alt text](image.png)
+![Alt text](client/src/images/jate.PNG)
 
-![Alt text](image-2.png)
+![Alt text](client/src/images/image-1.png)
 
-![Alt text](image-4.png)
+![Alt text](client/src/images/image-4.png)
 
 https://mysterious-wildwood-29093-4ef425e190fc.herokuapp.com/
 
