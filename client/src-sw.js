@@ -6,7 +6,6 @@ const { ExpirationPlugin } = require('workbox-expiration');
 const { precacheAndRoute } = require('workbox-precaching/precacheAndRoute');
 const { StaleWhileRevalidate } = require('workbox-strategies');
 
-
 precacheAndRoute(self.__WB_MANIFEST);
 
 const pageCache = new CacheFirst({
@@ -33,3 +32,5 @@ registerRoute(
   ({request}) => request.destination === 'style' || request.destination === 'script' || request.destination === 'image',
   new StaleWhileRevalidate()
 );
+
+console.log('Service Worker: registerRoute completed');
