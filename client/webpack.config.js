@@ -3,42 +3,12 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
-const is_prod = process.env.NODE_ENV === 'production'
-
-const plugins =  [
-  new HtmlWebpackPlugin({
-    template: './index.html',
-    filename: 'index.html',
-  }),  
-]
-
-if (is_prod) {
-  plugins.push(...[
-    new WebpackPwaManifest({
-      name: 'Not Another Text Editor',
-      short_name: 'NATE',
-      description: 'A text editor for use on and offline.',
-      background_color: '#fff',
-      theme_color: '#000',
-      publicPath: '/',
-      inject: true,
-      icons: [
-        {
-          src: path.resolve('src/images/logo.png'),
-          sizes: [96, 128, 192, 256, 384, 512],
-        },
-      ],
-    }),
-    new InjectManifest({
-      swSrc: './src-sw.js',
-      swDest: 'service-worker.js',
-    })
-  ])
-}
+// TODO: Add and configure workbox plugins for a service worker and manifest file.
+// TODO: Add CSS loaders and babel to webpack.
 
 module.exports = () => {
   return {
-    mode: is_prod ? 'production' : 'development',
+    mode: 'development',
     entry: {
       main: './src/js/index.js',
       install: './src/js/install.js'
@@ -47,8 +17,38 @@ module.exports = () => {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
-    plugins,
-    module: {
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: './index.html',
+        title: 'nate'
+      }),
+    
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js',
+      }),
+
+      new WebpackPwaManifest({
+        fingerprints: false,
+        inject: true,
+        name: 'Not_Another_Text_Editor',
+        short_name: 'nate',
+        description: 'A text editor for on and offline use.',
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
+        start_url: './',
+        publicPath: './',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+          },
+        ],
+      }),
+    ],
+
+  module: {
       rules: [
         {
           test: /\.js$/,

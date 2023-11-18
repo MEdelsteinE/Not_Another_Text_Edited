@@ -1,7 +1,7 @@
 import { openDB } from 'idb';
 
 const initdb = async () =>
-  openDB('nate_db', 1, {
+  openDB('nate_store', 1, {
     upgrade(db) {
       if (db.objectStoreNames.contains('nate_store')) {
         console.log('This datbase alreayd exists');
@@ -14,7 +14,7 @@ const initdb = async () =>
 
 // TODO: Add logic to a method that accepts some content and adds it to the database
 export const putDb = async (content) => {
-  const db = await openDB('nate_db', 1);
+  const db = await openDB('nate_store', 1);
   const tx = db.transaction('nate_store', 'readwrite');
   const store = tx.objectStore('nate_store');
   const result = await store.put({ id: 1, value: content });
@@ -24,7 +24,7 @@ export const putDb = async (content) => {
 
 // TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
-  const db = await openDB('nate_db', 1);
+  const db = await openDB('nate_store', 1);
   const tx = db.transaction('nate_store', 'readonly');
   const store = tx.objectStore('nate_store');
   const text = await store.get(1);

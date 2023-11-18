@@ -1,9 +1,9 @@
 {
   "name": "not_another_text_editor",
   "scripts": {
-    "dev": "webpack-dev-server --mode development",
+    "dev": "webpack-dev-server",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --open"
+    "start": "webpack --watchAll"
   },
   "author": "2U",
   "license": "UNLICENSED",
