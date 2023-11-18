@@ -26,13 +26,13 @@ To use this application make sure you are in the root file and use the start:dev
 ## Contributors
 
 This application uses the following packages:
-express
-nodemon
-babel-loader
-css-loader
-codepack-mirir-themes
-idb
-webapck
+1. express
+2. nodemon
+3. babel-loader
+4. css-loader
+5. codepack-mirir-themes
+6. idb
+7. webapck
 
 ## Tests
 
